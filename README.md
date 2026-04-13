@@ -232,3 +232,32 @@ A few sentences about what you learned:
 Here is the terminal output of my recommender simulation:
 
 ![alt text](image.png)
+
+
+## Evaluation Results
+
+### High-Energy Pop Profile
+This profile prefers energetic and upbeat songs.
+
+![alt text](image-1.png)
+
+---
+
+### Chill Lofi Profile
+This profile prefers calm, low-energy, and slower tempo songs.
+
+![alt text](image-2.png)
+
+---
+
+### Deep Intense Rock Profile
+This profile prefers intense, high-energy rock music.
+
+![alt text](image-3.png)
+
+---
+
+### Conflicting Metal Calm Profile (Edge Case)
+This profile combines conflicting preferences: metal genre with calm mood and very low energy.
+
+![alt text](image-4.png)

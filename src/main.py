@@ -1,12 +1,5 @@
 """
 Command line runner for the Music Recommender Simulation.
-
-This file helps you quickly run and test your recommender.
-
-You will implement the functions in recommender.py:
-- load_songs
-- score_song
-- recommend_songs
 """
 
 import csv
@@ -34,25 +27,53 @@ def load_songs(csv_path: str) -> List[Dict]:
             })
     return songs
 
+
 def main() -> None:
     songs = load_songs("data/songs.csv")
-    print(f"Loaded songs: {len(songs)}")
+    print(f"Loaded songs: {len(songs)}\n")
 
-    user_profile = {
-        "favorite_genres": ["pop", "indie pop"],
-        "favorite_moods": ["happy", "energetic"],
-        "target_energy": 0.8,
-        "target_tempo_bpm": 120
+    profiles = {
+        "High-Energy Pop": {
+            "favorite_genres": ["pop", "indie pop"],
+            "favorite_moods": ["happy", "energetic"],
+            "target_energy": 0.8,
+            "target_tempo_bpm": 120
+        },
+        "Chill Lofi": {
+            "favorite_genres": ["lofi", "acoustic"],
+            "favorite_moods": ["calm", "chill"],
+            "target_energy": 0.3,
+            "target_tempo_bpm": 85
+        },
+        "Deep Intense Rock": {
+            "favorite_genres": ["rock", "alternative"],
+            "favorite_moods": ["intense", "dark"],
+            "target_energy": 0.9,
+            "target_tempo_bpm": 140
+        },
+        "Conflicting Metal Calm": {
+            "favorite_genres": ["metal"],
+            "favorite_moods": ["calm"],
+            "target_energy": 0.1,
+            "target_tempo_bpm": 50
+        }
     }
 
-    recommendations = recommend_songs(user_profile, songs, k=5)
+    # ✅ LOOP INSIDE MAIN
+    for profile_name, user_profile in profiles.items():
+        print("=" * 60)
+        print(f"Profile: {profile_name}")
+        print("=" * 60)
 
-    print("\nTop recommendations:\n")
-    for song, score, explanation in recommendations:
-        print(f"{song['title']} by {song['artist']}")
-        print(f"Score: {score:.2f}")
-        print(f"Reasons: {explanation}")
-        print("-" * 40)
+        recommendations = recommend_songs(user_profile, songs, k=5)
+
+        for song, score, explanation in recommendations:
+            print(f"{song['title']} by {song['artist']}")
+            print(f"Score: {score:.2f}")
+            print(f"Reasons: {explanation}")
+            print("-" * 40)
+
+        print()
 
 
 if __name__ == "__main__":

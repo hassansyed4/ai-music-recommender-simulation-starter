@@ -1,56 +1,96 @@
-# 🎧 Model Card: Music Recommender Simulation
+# 🎧 Model Card - Music Recommender Simulation
 
-## 1. Model Name  
+## 1. Model Name
 
-**TuneMatch Recommender**
-
----
-
-## 2. Intended Use  
-
-This model generates personalized music recommendations by scoring songs based on how well they match a user's stated preferences for genre, mood, energy level, and tempo. It assumes users have clear preferences for one specific genre and mood, along with target energy and tempo levels. This is designed for classroom exploration and learning about recommendation systems, not for production use with real users.
+TuneMatch Recommender 1.0
 
 ---
 
-## 3. How the Model Works  
+## 2. Goal / Task
 
-The model looks at each song's genre, mood, energy level, and tempo. For a user's preferences, it checks if the song's genre and mood exactly match what the user likes, giving 10 points for each match. Then it measures how close the song's energy and tempo are to what the user wants - the closer they are, the more points (up to 5 each). Songs get ranked by their total points, with the highest scoring ones recommended. I added tempo matching and made the scoring more structured compared to the starter code.
-
----
-
-## 4. Data  
-
-The dataset contains 18 songs from various genres including pop, lofi, rock, jazz, and others. Moods range from happy and chill to intense and romantic. The data includes numerical features like energy (0-1 scale) and tempo (BPM). I didn't add or remove songs from the original CSV. The dataset might miss some musical dimensions like lyrics, cultural context, or user listening history.
+This system recommends songs based on a user's music preferences.  
+It tries to predict which songs a user might like by comparing their taste profile with song features.
 
 ---
 
-## 5. Strengths  
+## 3. Data Used
 
-The system works well for users with clear, specific preferences who want songs that closely match their stated criteria. It correctly prioritizes exact genre and mood matches while still considering energy and tempo closeness. The scoring is transparent and easy to understand, making it good for educational purposes. It performed well in tests with users preferring pop/happy music with moderate energy and tempo around 120 BPM.  
-
----
-
-## 6. Limitations and Bias 
-
-The system doesn't consider lyrics, artist popularity, user listening history, or collaborative filtering. It requires exact genre and mood matches, which might miss similar but not identical categories. The small dataset (18 songs) limits diversity and may not represent all musical tastes. The scoring could bias toward songs that match multiple criteria, creating filter bubbles. Users with niche or multiple preferences aren't well served by the single genre/mood approach.
+The dataset contains 18 songs with features such as genre, mood, energy, and tempo.  
+The dataset is small and does not cover all music styles, which limits the variety of recommendations.
 
 ---
 
-## 7. Evaluation  
+## 4. Algorithm Summary
 
-I tested with a user profile preferring pop genre, happy mood, 0.8 energy, and 120 BPM tempo. The system correctly ranked "Sunrise City" (pop, happy, close energy/tempo) as the top recommendation. I ran the provided unit tests, which check that songs are sorted by score and explanations are generated. I was surprised by how well the closeness scoring worked for energy and tempo, providing nuanced rankings beyond just exact matches.
+Each song is given a score based on how well it matches the user's preferences.
+
+- Songs get points if their genre matches the user's favorite genres  
+- Songs get points if their mood matches the user's preferred moods  
+- Additional points are given when the song's energy and tempo are close to the user's target values  
+
+All songs are scored and then ranked from highest to lowest.  
+The top songs are recommended to the user.
 
 ---
 
-## 8. Future Work  
+## 5. Observed Behavior / Biases
 
-I would add support for multiple preferred genres and moods, incorporate user listening history, and include diversity controls to avoid recommending too many similar songs. Better explanations could highlight why certain songs scored lower. Adding features like lyrics analysis or acoustic preference usage would make it more comprehensive. Handling tempo ranges instead of exact targets could improve flexibility.
+The system tends to favor songs with similar energy and tempo, even if the genre does not match.  
+For example, some songs appeared in multiple profiles because their numerical features were close.  
+
+The system also struggles with conflicting preferences, such as a "metal + calm + low energy" profile.  
+In such cases, it produces unexpected results.
+
+Because the dataset is small, some genres are underrepresented, which can create bias in recommendations.
 
 ---
 
-## 9. Personal Reflection  
+## 6. Evaluation Process
 
-Building this recommender showed me how simple weighted scoring can create effective recommendations when the criteria are well-chosen. I was surprised by how much the exact genre/mood matches dominated the rankings, teaching me about the importance of balancing different scoring components. This experience made me appreciate how real music apps like Spotify must handle much more complex user data and preferences to provide personalized recommendations.
+The system was tested using multiple user profiles:
+
+- High-Energy Pop  
+- Chill Lofi  
+- Deep Intense Rock  
+- Conflicting Metal Calm (edge case)  
+
+Each profile produced different results based on genre, mood, energy, and tempo.  
+
+An experiment was also performed by adjusting scoring weights, which showed that changing weights can significantly affect recommendations.
+
+---
+
+## 7. Intended Use and Non-Intended Use
+
+**Intended Use:**
+- Educational demonstration of how recommendation systems work  
+- Simple simulation of content-based filtering  
+
+**Non-Intended Use:**
+- Not suitable for real-world music platforms  
+- Should not be used for production-level recommendations  
+- Does not handle large-scale user behavior or personalization  
+
+---
+
+## 8. Ideas for Improvement
+
+- Add more songs to improve recommendation variety  
+- Introduce learning from user feedback (likes/dislikes)  
+- Balance scoring weights to avoid over-reliance on energy and tempo  
+- Include more features like artist similarity or lyrics  
+
+---
+
+## 9. Personal Reflection
+
+**Biggest Learning Moment:** My biggest learning moment was realizing how sensitive recommendation systems are to scoring weights. When I doubled energy importance and halved genre importance in an experiment, the entire ranking changed dramatically. This taught me that even small parameter tweaks can create very different user experiences, and real systems need careful tuning.
+
+**How AI Tools Helped:** AI tools like GitHub Copilot were incredibly helpful for generating initial code structures, writing docstrings, and creating Mermaid diagrams. They sped up implementation by suggesting scoring logic and test cases. However, I had to double-check suggestions when they didn't match my design - for example, ensuring the scoring math was correct and the class structure aligned with the requirements.
+
+**Surprise About Simple Algorithms:** I was surprised that such a simple algorithm could feel like a real recommender. Just matching genres/moods and comparing energy/tempo created rankings that actually made sense to users. It showed me how even basic rules can simulate complex behavior when the data and weights are reasonable.
+
+**What I'd Try Next:** If I extended this project, I'd implement user feedback learning - allowing the system to adapt weights based on what users actually like/dislike. I'd also add collaborative filtering by comparing user profiles to find similar taste patterns, and incorporate more song features like lyrics themes or artist similarity to make recommendations more nuanced.
 
 ## 6. Limitations and Bias 
 

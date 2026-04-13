@@ -41,15 +41,15 @@ class Recommender:
     def score_song(self, song: Song, user: UserProfile) -> float:
         """Calculate the recommendation score for a song based on user preferences."""
         score = 0.0
-        # Genre match
+        # Genre match - reduced weight
         if song.genre == user.favorite_genre:
-            score += 10
+            score += 5  # was 10
         # Mood match
         if song.mood == user.favorite_mood:
             score += 10
-        # Energy closeness (0-5 points)
+        # Energy closeness - increased weight
         energy_diff = abs(song.energy - user.target_energy)
-        score += (1 - energy_diff) * 5
+        score += (1 - energy_diff) * 10  # was 5
         # Tempo closeness (0-5 points, normalized by max diff of 100 bpm)
         tempo_diff = abs(song.tempo_bpm - user.target_tempo)
         tempo_closeness = max(0, 1 - tempo_diff / 100)
@@ -96,15 +96,15 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     reasons = []
 
     if song["genre"] in user_prefs["favorite_genres"]:
-        score += 2.0
-        reasons.append("genre match (+2.0)")
+        score += 1.0  # was 2.0 - halved
+        reasons.append("genre match (+1.0)")
 
     if song["mood"] in user_prefs["favorite_moods"]:
         score += 1.0
         reasons.append("mood match (+1.0)")
 
     energy_diff = abs(song["energy"] - user_prefs["target_energy"])
-    energy_score = max(0.0, 1.0 - energy_diff)
+    energy_score = max(0.0, 1.0 - energy_diff) * 2.0  # was 1.0 - doubled
     score += energy_score
     reasons.append(f"energy closeness (+{energy_score:.2f})")
 
