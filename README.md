@@ -40,19 +40,8 @@ Real-world recommenders combine many signals at scale: what a user has liked bef
 
 ### Data Flow Visualization
 
-```mermaid
-flowchart TD
-    A[Load songs.csv] --> B[Parse CSV rows into Song objects]
-    B --> C[User provides UserProfile<br/>favorite_genre, favorite_mood,<br/>target_energy, target_tempo]
-    C --> D[For each Song object]
-    D --> E[Check genre match<br/>+10 if exact match]
-    E --> F[Check mood match<br/>+10 if exact match]
-    F --> G[Calculate energy closeness<br/>(1 - |song.energy - user.target_energy|) * 5]
-    G --> H[Calculate tempo closeness<br/>max(0, 1 - |song.tempo - user.target_tempo| / 100) * 5]
-    H --> I[Sum all scores<br/>Total = genre + mood + energy + tempo]
-    I --> J[Sort all songs by total score descending]
-    J --> K[Return top k songs with explanations]
-```
+<img width="595" height="647" alt="image" src="https://github.com/user-attachments/assets/f95bf03d-df1f-43b8-957c-867c9e575308" />
+
 
 ### Potential Biases
 
